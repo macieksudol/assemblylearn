@@ -1,5 +1,6 @@
 # assemblylearn
 this repo is made to learn assembler in AVR uC
+
 ;
 ; lab01_quarantine.asm
 ;
@@ -45,15 +46,38 @@ this repo is made to learn assembler in AVR uC
 ;	porta			$3b					$1b				Wyjscie portu
 ;   ddra			$3a					$1a				Kierunek
 ;
-.EQU wy=0b11111111;ustawienie wartosci wy, tak zeby portA był wyjsciem
-.EQU diody=0b01010101;ustawienie wartosci diody, tak zeby zapalić co drugą
-ldi R16,wy;kopiowanie wartosci DO wybranego rejestru
-ldi R17,diody;kopiowanie wartosci DO wybranego rejestru
-sts $3b,R16;zapisanie wartosci rejestru pod adres portA
-sts $3a,R17;zapisanie wartosci rejestru pod adres ddra
+;instrukcja Set Bit in I/O Register (sbi)
+;ustawia wskazany bit w rejestrze we/wy.Instrukcja interpretuje adres
+;jako adres w przestrzeni we/wy.(np sbi $12,7)
+;
+;sbi A, b ; ustaw bit b w rejestrze A, Ae(0,31) be(0,7)
+;
+;instrukcja Clear Bit in I/O Register (cbi)
+;KASUJE wskazany bit w rejestrze we/wy.Instrukcja interpretuje adres
+;jako adres w przestrzeni we/wy.(np cbi $12,7)
+;
+;cbi A,b wyczyść bit w rejestrze A,  Ae(0,31) be(0,7)
+;
+start:
+
+.EQU wy=0b11111111;
+ldi R16,wy;
+out $1a,R16;
+out $1b,R16;
+
+sbi $1b,0;ustawienie 0 bitu = stan wysoki
+cbi $1b,1;wyczyszczenie 1 bitu =stan niski(diody odwrotnie=tutaj zaswieci)
+
+sbi $1b,2;ustawienie 2 bitu = stan wysoki
+cbi $1b,3;wyczyszczenie 3 bitu =stan niski
+
+sbi $1b,4;ustawienie 4 bitu = stan wysoki
+cbi $1b,5;wyczyszczenie 5 bitu =stan niski
+
+sbi $1b,6;ustawienie 6 bitu = stan wysoki
+cbi $1b,7;wyczyszczenie 7 bitu =stan niski
 
 stop: rjmp stop;
-
 
 
 
